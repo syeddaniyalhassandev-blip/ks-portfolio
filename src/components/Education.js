@@ -6,7 +6,7 @@ const educationData = [
   { 
     degree: "Bachelor of Engineering", 
     school: "Mechatronics Engineering, KIET", 
-    year: "Graduated", 
+    year: "2022 – 2026", 
     badge: "KIET",
     image: "/kiet.jpg",
     bgSize: "cover"
@@ -14,7 +14,7 @@ const educationData = [
   { 
     degree: "Intermediate", 
     school: "Govt. Dehli College Karachi", 
-    year: "Pre-engineering", 
+    year: "2020 – 2022", 
     badge: "DEHLI",
     image: "/dehli.jpg",
     bgSize: "cover"
@@ -22,7 +22,7 @@ const educationData = [
   { 
     degree: "Matriculation", 
     school: "U & V School System", 
-    year: "Science", 
+    year: "2018 – 2022", 
     badge: "SCHOOL",
     image: "/uv.jpg",
     bgSize: "70%"
@@ -53,10 +53,7 @@ export default function Education() {
               </div>
               <h3 className={`text-sm sm:text-base font-black mb-1 leading-tight ${edu.image ? 'text-white' : ''}`}>{edu.degree}</h3>
               <p className={`text-sm sm:text-base font-bold mb-2 ${edu.image ? 'text-white/80' : 'text-foreground/40'}`}>{edu.school}</p>
-              <p className={`font-bold mt-auto text-xs sm:text-sm ${edu.image ? 'text-white' : 'text-primary'}`}>{edu.year}</p>
-              <button className={`mt-6 text-[10px] font-black uppercase tracking-widest border-b transition-all ${edu.image ? 'text-white border-white/20 hover:border-white' : 'text-primary border-primary/20 hover:border-primary'}`}>
-                EXPLORE
-              </button>
+              <p className={`font-bold mt-auto text-xs sm:text-sm tracking-widest ${edu.image ? 'text-white/90' : 'text-primary'}`}>{edu.year}</p>
             </div>
           </div>
         ))}

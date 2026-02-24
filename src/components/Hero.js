@@ -57,9 +57,9 @@ export default function Hero() {
   return (
     <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-white">
       
-      {/* Background Image - Fixed Attachment */}
+      {/* Background Image - Fixed on desktop, scroll on mobile (iOS compat) */}
       <div 
-        className="absolute inset-0 z-0 bg-fixed bg-cover bg-center opacity-80"
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-80 bg-scroll md:bg-fixed"
         style={{ backgroundImage: "url('/hero.webp')" }}
       />
 

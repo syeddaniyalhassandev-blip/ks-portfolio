@@ -52,12 +52,6 @@ const certificationsData = [
     provider: "Embedded Edge Academy",
     badge: "Mar 2025",
     image: "/certificates/cert-microcontroller.jpg"
-  },
-  { 
-    title: "PROCOM'25 — RoboRace",
-    provider: "Certificate of Participation",
-    badge: "2025",
-    image: "/certificates/cert-roborace.jpg"
   }
 ];
 

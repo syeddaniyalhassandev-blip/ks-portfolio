@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 
 export default function Section({ id, title, subtitle, children, className = "" }) {
   return (
-    <section id={id} className={`py-20 px-6 lg:px-8 max-w-7xl mx-auto ${className}`}>
+    <section id={id} className={`py-10 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto ${className}`}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-16"
+        className="text-center mb-8 sm:mb-12 md:mb-16"
       >
         <h2 className="text-base sm:text-lg md:text-xl font-black tracking-tighter mb-3 uppercase">{title}</h2>
         {subtitle && <p className="text-sm text-foreground/60 max-w-2xl mx-auto font-medium">{subtitle}</p>}
