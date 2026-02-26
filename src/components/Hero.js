@@ -55,32 +55,34 @@ export default function Hero() {
   const currentTitle = titles[index] || "";
 
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-white">
+    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gray-950">
       
-      {/* Background Image - Fixed on desktop, scroll on mobile (iOS compat) */}
+      {/* Premium Tech Background */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-80 bg-scroll md:bg-fixed"
-        style={{ backgroundImage: "url('/hero.webp')" }}
+        className="absolute inset-0 z-0 bg-cover bg-center bg-scroll md:bg-fixed"
+        style={{ backgroundImage: "url('/hero-bg-new.png')" }}
       />
+      {/* Subtle dark overlay for text readability */}
+      <div className="absolute inset-0 z-0 bg-black/40" />
 
       <div className="relative z-10 text-center px-6 max-w-5xl">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight text-foreground leading-[1.1] sm:leading-none"
+          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight text-white leading-[1.1] sm:leading-none"
         >
-          <span className="font-extrabold opacity-90">Hi, I am</span> <span className="text-[#212529]">Engr. Khubaib Salman</span>
+          <span className="font-extrabold opacity-80">Hi, I am</span> <span className="text-white">Engr. Khubaib Salman</span>
         </motion.h1>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-foreground mb-8 h-8 md:h-12 leading-tight tracking-tight"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-8 h-8 md:h-12 leading-tight tracking-tight"
         >
-          <span className="font-semibold opacity-80">I am a</span> <span className="text-[#FF0000]">{currentTitle.substring(0, subIndex)}</span>
-          <span className="inline-block w-1 h-5 md:h-8 ml-1 bg-[#212529] animate-pulse align-middle" />
+          <span className="font-semibold opacity-70">I am a</span> <span className="text-red-400">{currentTitle.substring(0, subIndex)}</span>
+          <span className="inline-block w-1 h-5 md:h-8 ml-1 bg-white animate-pulse align-middle" />
         </motion.div>
 
         <motion.div
@@ -88,9 +90,22 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
         >
-          <a href="#" className="btn-primary text-xs sm:text-sm md:text-base px-8 sm:px-10 py-3 rounded-xl shadow-lg hover:shadow-primary/30 inline-block uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95">
-            DOWNLOAD RESUME
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="/Khubaib_Salman_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl shadow-lg hover:shadow-primary/30 inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
+            >
+              VIEW RESUME
+            </a>
+            <a
+              href="/Khubaib_Salman_CV.pdf"
+              download="Khubaib_Salman_CV.pdf"
+              className="text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl border-2 border-white/30 hover:border-primary text-white/80 hover:text-primary inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95">
+              DOWNLOAD ↓
+            </a>
+          </div>
         </motion.div>
       </div>
 

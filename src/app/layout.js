@@ -5,8 +5,11 @@ import Navbar from "@/components/Navbar";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Steven Feng Portfolio | Hi, I'm Steven",
-  description: "Personal portfolio showcasing robotics research and engineering.",
+  title: "Khubaib Salman | Mechatronics Engineer",
+  description: "Portfolio of Engr. Khubaib Salman — Mechatronics Engineer specializing in robotics, automation, and embedded systems.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {

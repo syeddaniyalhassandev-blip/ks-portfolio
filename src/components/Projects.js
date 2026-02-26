@@ -1,73 +1,63 @@
 "use client";
 
 import Section from "./Section";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Car,
-  Sword,
-  Factory,
-  Bot,
-  Home,
-  Flame,
-  Route,
-  ScanLine,
-  BellRing,
-} from "lucide-react";
 
 const projectsData = [
   {
     name: "Remote Controlled Car",
-    desc: "Built a 4WD RC car with custom chassis, L298N motor driver, and RF remote control. Implemented forward, reverse, and differential steering.",
-    tags: ["Arduino", "L298N", "RF Module", "C++"],
-    Icon: Car,
+    desc: "Built an Arduino Nano-based 4WD RC car using TT motors, L298N motor driver, and Bluetooth module. Implemented forward, reverse, and differential steering, controlled via a custom mobile application.",
+    tags: ["Arduino Nano", "L298N", "Bluetooth", "TT Motor", "Embedded C++"],
+    icon: "/projects/rc_car_icon.png",
   },
   {
     name: "Light Weight RoboWar",
-    desc: "Designed and fabricated a combat robot for RoboWar competition. Focused on weapon mechanism, armour plating, and drive system optimization.",
-    tags: ["Mechatronics", "SolidWorks", "Motor Control", "Fabrication"],
-    Icon: Sword,
+    desc: "Designed and fabricated a lightweight RoboWar combat robot. Integrated a brushless motor with ESC for the weapon system and brushed ESC for drive motors, controlled using RF transmitter and receiver.",
+    tags: ["Brushless Motor", "ESC", "RF Transmitter", "Fabrication", "Mechanical Design"],
+    icon: "/projects/robowar_icon.png",
   },
   {
     name: "Motor & Motion Automation",
     desc: "Developed a PLC-based motor control system using Siemens S7-1200 with SCADA interface for real-time monitoring and speed control.",
     tags: ["Siemens PLC", "TIA Portal", "SCADA", "Automation"],
-    Icon: Factory,
+    icon: "/projects/motor_auto_icon.png",
   },
   {
     name: "Soccer Robot",
-    desc: "Engineered an autonomous soccer-playing robot with IR sensors for ball detection and omni-wheels for multi-directional movement.",
-    tags: ["Arduino", "IR Sensors", "Omni-Wheels", "C++"],
-    Icon: Bot,
+    desc: "Developed an ESP32-based soccer robot using built-in Wi-Fi for mobile control. Used metal gear motors with L298N motor driver for precise and responsive multi-directional movement.",
+    tags: ["ESP32", "Wi-Fi", "L298N", "Metal Gear Motor", "Mobile Control"],
+    icon: "/projects/soccer_robot_icon.png",
   },
   {
     name: "Home Automation",
     desc: "Implemented IoT-based home automation using ESP32 with relay modules. Controlled appliances via mobile app over Wi-Fi.",
     tags: ["ESP32", "IoT", "Wi-Fi", "Relay"],
-    Icon: Home,
+    icon: "/projects/home_auto_icon.png",
   },
   {
     name: "Fire & Safety System",
     desc: "Built an automated fire detection and suppression system using flame sensors, MQ-2 gas sensor, and servo-controlled water pump.",
     tags: ["Arduino", "Flame Sensor", "MQ-2", "Servo"],
-    Icon: Flame,
+    icon: "/projects/fire_safety_icon.png",
   },
   {
     name: "Line Following Robot",
-    desc: "Programmed a PID-controlled LFR using IR sensor array for precision path tracking on complex tracks.",
-    tags: ["Arduino", "PID", "IR Array", "C++"],
-    Icon: Route,
+    desc: "Designed and fabricated a high-speed LFR using a custom PCB developed in EasyEDA. Integrated Arduino Nano, QTR-8A IR sensor array, N20 motors, and DRV8835 motor driver with optimized PID control for precise tracking on complex tracks.",
+    tags: ["Arduino Nano", "Custom PCB", "EasyEDA", "PID", "QTR-8A", "DRV8835"],
+    icon: "/projects/line_following_icon.png",
   },
   {
     name: "Pipe Inspection Robot",
-    desc: "Designed a miniature robot for pipe inspection with live camera feed, LED lighting, and differential drive for navigating narrow pipelines.",
-    tags: ["Raspberry Pi", "Camera", "Python", "Drive System"],
-    Icon: ScanLine,
+    desc: "Engineered a tripod-structured pipe inspection robot for safe navigation inside narrow pipelines. Implemented crack detection via image processing, odometry for distance tracking, and a real-time monitoring system for safety inspection.",
+    tags: ["Raspberry Pi", "Image Processing", "Crack Detection", "Odometry", "Python"],
+    icon: "/projects/pipe_inspection_icon.png",
   },
   {
-    name: "Bike Accident Indication",
-    desc: "Developed a safety system using MPU6050 accelerometer to detect sudden falls and send GPS coordinates via GSM module.",
-    tags: ["Arduino", "MPU6050", "GPS", "GSM"],
-    Icon: BellRing,
+    name: "Smart Bike Accident Alert",
+    desc: "Developed an intelligent accident detection system using ESP32, MPU6050, SIM800L GSM, and Neo-6M GPS. Implemented impact detection with user-confirmation via emergency button; automatically sends real-time GPS location to registered contacts if no response within a defined time frame.",
+    tags: ["ESP32", "MPU6050", "SIM800L", "Neo-6M GPS", "GSM", "IoT"],
+    icon: "/projects/bike_accident_icon.png",
   },
 ];
 
@@ -85,11 +75,17 @@ export default function Projects() {
             className="glass-card rounded-3xl p-6 flex flex-col gap-4 hover:-translate-y-1 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group"
           >
             {/* Icon + Title */}
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <proj.Icon className="w-4 h-4 text-primary group-hover:text-white transition-colors duration-300" />
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 rounded-2xl bg-gray-900 flex items-center justify-center shrink-0 overflow-hidden shadow-lg shadow-black/20 group-hover:shadow-primary/20 transition-all duration-300 p-2">
+                <Image
+                  src={proj.icon}
+                  alt={proj.name}
+                  fill
+                  className="object-contain p-2 group-hover:scale-110 transition-transform duration-500"
+                  unoptimized
+                />
               </div>
-              <h3 className="font-black uppercase tracking-tight text-sm leading-snug text-foreground group-hover:text-primary transition-colors mt-1.5">
+              <h3 className="font-black uppercase tracking-tight text-sm leading-snug text-foreground group-hover:text-primary transition-colors">
                 {proj.name}
               </h3>
             </div>

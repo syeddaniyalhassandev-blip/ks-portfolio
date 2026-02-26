@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "Home",           href: "#home" },
-  { name: "About",          href: "#about" },
-  { name: "Experience",     href: "#experience" },
-  { name: "Education",      href: "#education" },
-  { name: "Projects",       href: "#projects" },
-  { name: "Skills",         href: "#skills" },
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "Education", href: "#education" },
+  { name: "Projects", href: "#projects" },
+  { name: "Skills", href: "#skills" },
   { name: "Certifications", href: "#certifications" },
-  { name: "Contact",        href: "#contact" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -33,9 +33,11 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-16">
-
           {/* Logo / Name */}
-          <a href="#home" className="text-sm font-black uppercase tracking-widest text-foreground hover:text-primary transition-colors">
+          <a
+            href="#home"
+            className={`text-2xl font-black uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
+          >
             KS
           </a>
 
@@ -45,7 +47,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-xs font-bold uppercase tracking-widest text-foreground/60 hover:text-primary transition-colors"
+                className={`text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary ${ scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
               >
                 {link.name}
               </a>
@@ -54,7 +56,10 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <div className="md:hidden">
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-foreground">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-foreground"
+            >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
