@@ -17,12 +17,7 @@ const projectsData = [
     tags: ["Brushless Motor", "ESC", "RF Transmitter", "Fabrication", "Mechanical Design"],
     icon: "/projects/robowar_icon.png",
   },
-  {
-    name: "Motor & Motion Automation",
-    desc: "Developed a PLC-based motor control system using Siemens S7-1200 with SCADA interface for real-time monitoring and speed control.",
-    tags: ["Siemens PLC", "TIA Portal", "SCADA", "Automation"],
-    icon: "/projects/motor_auto_icon.png",
-  },
+
   {
     name: "Soccer Robot",
     desc: "Developed an ESP32-based soccer robot using built-in Wi-Fi for mobile control. Used metal gear motors with L298N motor driver for precise and responsive multi-directional movement.",
