@@ -4,9 +4,8 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const titles = ["Mechatronics Engineer", "Robotics Enthusiast", "Automation Specialist", "Embedded Systems Developer"];
-
-export default function Hero() {
+export default function Hero({ data, id }) {
+  const titles = data?.titles || ["Mechatronics Engineer"];
   const [mounted, setMounted] = useState(false);
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
@@ -49,16 +48,16 @@ export default function Hero() {
   }, [subIndex, index, reverse, mounted]);
 
   if (!mounted) {
-    return <section id="home" className="h-screen bg-white" />;
+    return <section id={id || "home"} className="h-screen bg-white" />;
   }
 
   const currentTitle = titles[index] || "";
 
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gray-950">
-      
+    <section id={id || "home"} className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gray-950">
+
       {/* Premium Tech Background */}
-      <div 
+      <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-scroll md:bg-fixed"
         style={{ backgroundImage: "url('/hero-bg-new.png')" }}
       />
@@ -72,7 +71,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight text-white leading-[1.1] sm:leading-none"
         >
-          <span className="font-extrabold opacity-80">Hi, I am</span> <span className="text-white">Engr. Khubaib Salman</span>
+          <span className="font-extrabold opacity-80">Hi, I am</span> <span className="text-white">{data?.name || 'Engr. Khubaib Salman'}</span>
         </motion.h1>
 
         <motion.div
@@ -92,7 +91,7 @@ export default function Hero() {
         >
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="/Khubaib_Salman_CV.pdf"
+              href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl shadow-lg hover:shadow-primary/30 inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
@@ -100,7 +99,7 @@ export default function Hero() {
               VIEW RESUME
             </a>
             <a
-              href="/Khubaib_Salman_CV.pdf"
+              href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
               download="Khubaib_Salman_CV.pdf"
               className="text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl border-2 border-white/30 hover:border-primary text-white/80 hover:text-primary inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95">
               DOWNLOAD ↓
@@ -112,7 +111,7 @@ export default function Hero() {
       {/* Scroll Down Hint */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-80">
         <div className="w-6 h-10 border-[2.5px] border-primary rounded-full flex justify-center pt-2 shadow-[0_0_15px_rgba(52,152,219,0.3)]">
-            <div className="w-1 h-2 bg-primary rounded-full" />
+          <div className="w-1 h-2 bg-primary rounded-full" />
         </div>
       </div>
     </section>

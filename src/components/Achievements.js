@@ -6,146 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { X, Trophy, Medal, Star, Award } from "lucide-react";
 
-const achievements = [
-  {
-    title: "AIRICE '25 – Runner Up (CAD Craze)",
-    org: "Air University",
-    badge: "Runner-Up",
-    badgeType: "silver",
-    points: [
-      "Secured Runner-Up position in CAD Craze at AIRICE '25.",
-      "Demonstrated advanced CAD modeling skills and structured design methodology under competitive constraints.",
-    ],
-    image: "/achienements/AIRICE CAD CRAZE RUNNER UP.png",
-    icon: <Medal size={18} />,
-  },
-  {
-    title: "AIRICE '25 – Winner (Robo Soccer)",
-    org: "Air University",
-    badge: "1st Place",
-    badgeType: "gold",
-    points: [
-      "Won 1st place in Robo Soccer at AIRICE '25.",
-      "Developed a precision-controlled robotic system focused on strategy, responsiveness, and system optimization.",
-    ],
-    image: "/achienements/AIRICE ROBO SOCCER WINNER.png",
-    icon: <Trophy size={18} />,
-  },
-  {
-    title: "PROBATTLE 25 – Winner (Line Following Robot)",
-    org: "PROBATTLE",
-    badge: "1st Place",
-    badgeType: "gold",
-    points: [
-      "Achieved 1st position in Line Following Robot competition.",
-      "Engineered a high-speed autonomous robot with optimized sensor calibration and control algorithms.",
-    ],
-    image: "/achienements/PROBATTLE LFR WINNER.png",
-    icon: <Trophy size={18} />,
-  },
-  {
-    title: "DUETECH '25 – Runner Up (Robo Race)",
-    org: "DUETECH",
-    badge: "Runner-Up",
-    badgeType: "silver",
-    points: [
-      "Secured Runner-Up position in Robo Race.",
-      "Designed a mechanically optimized racing robot emphasizing speed, stability, and control efficiency.",
-    ],
-    image: "/achienements/DUETECH ROBO RACE RUNNER UP.png",
-    icon: <Medal size={18} />,
-  },
-  {
-    title: "TEKNOFEST Pakistan – Excellence Award",
-    org: "TEKNOFEST Pakistan",
-    badge: "Excellence Award",
-    badgeType: "special",
-    points: [
-      "Awarded Excellence Award at TEKNOFEST Pakistan.",
-      "Recognized for innovation, technical execution, and performance at a national-level technology platform.",
-    ],
-    image: "/achienements/TEKNOFEST RUNNER UP CAD CRAZE.png",
-    icon: <Award size={18} />,
-  },
-  {
-    title: "SPEC '24 – Winner (Project Exhibition, KIET)",
-    org: "KIET",
-    badge: "1st Place",
-    badgeType: "gold",
-    points: [
-      "Won 1st position at SPEC'24 Semester Project Competition.",
-      "Presented an engineering solution evaluated for innovation, technical depth, and practical implementation.",
-    ],
-    image: "/achienements/KIET SPEC WINNER.png",
-    icon: <Trophy size={18} />,
-  },
-  {
-    title: "APEC '25 x MechTech '25 – Winner (Robo Soccer)",
-    org: "APEC x MechTech",
-    badge: "1st Place",
-    badgeType: "gold",
-    points: [
-      "Secured 1st place in Robo Soccer competition.",
-      "Focused on robotic control systems, strategy design, and hardware integration.",
-    ],
-    image: "/achienements/APEC ROBO SOCCER WINNER.png",
-    icon: <Trophy size={18} />,
-  },
-  {
-    title: "APEC '25 x MechTech '25 – Winner (RC Car)",
-    org: "APEC x MechTech",
-    badge: "1st Place",
-    badgeType: "gold",
-    points: [
-      "Won 1st position in RC Car competition.",
-      "Optimized mechanical structure and suspension system for speed and maneuverability.",
-    ],
-    image: "/achienements/APEC ROBO RACE WINNER.png",
-    icon: <Trophy size={18} />,
-  },
-  {
-    title: "Adamjee Coaching Centre – SSC Part-II (83%)",
-    org: "Adamjee Coaching Centre",
-    badge: "83%",
-    badgeType: "academic",
-    points: [
-      "Achieved 83% in SSC Part-II.",
-      "Demonstrated academic consistency and strong foundational performance.",
-    ],
-    image: "/achienements/SSC 2.png",
-    icon: <Star size={18} />,
-  },
-  {
-    title: "Adamjee Coaching Centre – HSC Part-I (90%)",
-    org: "Adamjee Coaching Centre",
-    badge: "90%",
-    badgeType: "academic",
-    points: [
-      "Secured 90% in HSC Part-I.",
-      "Maintained high academic standards alongside technical achievements.",
-    ],
-    image: "/achienements/HSC 1.png",
-    icon: <Star size={18} />,
-  },
-  {
-    title: "U & V School System – Annual Academic Achievements",
-    org: "U & V School System",
-    badge: "Top Position",
-    badgeType: "academic",
-    points: [
-      "Recognized for securing top positions in multiple academic sessions.",
-      "Maintained consistent academic excellence throughout early education.",
-    ],
-    image: "/achienements/13-14.png",
-    extraImages: [
-      "/achienements/14-15.png",
-      "/achienements/15-16.png",
-      "/achienements/16-17.png",
-    ],
-    icon: <Star size={18} />,
-  },
-];
-
 const badgeStyles = {
   gold: "bg-yellow-400 text-yellow-900 font-black shadow-lg shadow-yellow-400/40",
   silver: "bg-slate-200 text-slate-800 font-black shadow-lg shadow-slate-400/40",
@@ -160,7 +20,8 @@ const iconColors = {
   academic: "text-blue-400",
 };
 
-export default function Achievements() {
+export default function Achievements({ data, id }) {
+  const achievements = data || [];
   const [selected, setSelected] = useState(null);
   const [imgIndex, setImgIndex] = useState(0);
 
@@ -179,7 +40,7 @@ export default function Achievements() {
     : [];
 
   return (
-    <Section id="achievements" title="Achievements">
+    <Section id={id || "achievements"} title="Achievements">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {achievements.map((ach, i) => (
           <motion.div
@@ -214,7 +75,10 @@ export default function Achievements() {
             <div className="p-5 flex flex-col gap-3">
               <div className="flex items-start gap-3">
                 <span className={`mt-0.5 shrink-0 ${iconColors[ach.badgeType]}`}>
-                  {ach.icon}
+                  {ach.badgeType === 'gold' && <Trophy size={18} />}
+                  {ach.badgeType === 'silver' && <Medal size={18} />}
+                  {ach.badgeType === 'special' && <Award size={18} />}
+                  {ach.badgeType === 'academic' && <Star size={18} />}
                 </span>
                 <div>
                   <h3 className="text-sm font-black uppercase tracking-tight text-foreground leading-snug group-hover:text-primary transition-colors">
@@ -311,7 +175,10 @@ export default function Achievements() {
               <div className="p-6 overflow-y-auto">
                 <div className="flex items-start gap-3 mb-3">
                   <span className={`mt-0.5 shrink-0 ${iconColors[selected.badgeType]}`}>
-                    {selected.icon}
+                    {selected.badgeType === 'gold' && <Trophy size={18} />}
+                    {selected.badgeType === 'silver' && <Medal size={18} />}
+                    {selected.badgeType === 'special' && <Award size={18} />}
+                    {selected.badgeType === 'academic' && <Star size={18} />}
                   </span>
                   <div>
                     <h2 className="text-base font-black uppercase tracking-tight text-foreground leading-snug">

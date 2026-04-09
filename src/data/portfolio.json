@@ -1,0 +1,494 @@
+{
+  "sections": [
+    {
+      "id": "hero",
+      "type": "Hero",
+      "navTitle": "Home",
+      "data": {
+        "name": "Engr. Khubaib Salman",
+        "titles": [
+          "Mechatronics Engineer",
+          "Robotics Enthusiast",
+          "Automation Specialist",
+          "Embedded Systems Developer"
+        ],
+        "cvPath": "/Khubaib_Salman_CV.pdf"
+      }
+    },
+    {
+      "id": "about",
+      "type": "About",
+      "navTitle": "About",
+      "data": {
+        "paragraphs": [
+          "I'm a Mechatronics Engineer passionate about building intelligent robotic and automation systems that merge mechanical design, electronics, and smart control. My work focuses on creating efficient, reliable, and adaptive machines that bridge the gap between imagination and innovation.",
+          "I earned my Bachelor's degree in Mechatronics Engineering from the Karachi Institute of Economics and Technology (KIET). Throughout my journey, I've gained hands-on experience through internships where I contributed to projects involving automation, design, and testing."
+        ]
+      }
+    },
+    {
+      "id": "experience",
+      "type": "Experience",
+      "navTitle": "Experience",
+      "data": [
+        {
+          "company": "Atlas Honda Limited",
+          "role": "Internship",
+          "period": "Jul – Aug 2023",
+          "desc": "Assisted in assembly and production of motorcycles, including inspection of components, assembly line operations, and quality control checks. Gained hands-on experience in mechanical and electrical systems of motorcycles and participated in documentation of production processes.",
+          "logo": "/atlas-honda.png",
+          "letter": "/internships/atlas-honda.jpeg"
+        },
+        {
+          "company": "ABC Hygiene Industries Pvt. Ltd.",
+          "role": "Internship",
+          "period": "Aug – Sep 2023",
+          "desc": "Assisted in monitoring hygiene and sanitation processes in production. Learned quality control checks, inventory management, and documentation procedures. Observed operational workflows and participated in reporting and maintaining production standards.",
+          "logo": "/abc.png",
+          "letter": "/internships/abc-hygiene.jpeg"
+        },
+        {
+          "company": "Atlas Battery Limited",
+          "role": "Internship",
+          "period": "Aug 2024",
+          "desc": "Assisted in inspection, testing, and maintenance of automotive and industrial batteries. Observed production line operations, quality control processes, and battery performance evaluation. Participated in documentation and reporting of battery test results.",
+          "logo": "/atlas-battery.png",
+          "letter": "/internships/atlas-battery.jpeg"
+        },
+        {
+          "company": "Pakistan Aeronautical Complex (PAC) Kamra",
+          "role": "Internship",
+          "period": "Sep 2024",
+          "desc": "Assisted in maintenance and inspection of aircraft mechanical and electronic systems. Observed and learned operation of oil-injected screw compressors, storage tanks, and CNC machining processes. Participated in assembly, testing, and documentation of aircraft components, including work in electronic bay.",
+          "logo": "/pacc.png",
+          "letter": "/internships/pac-kamra.jpg"
+        },
+        {
+          "company": "Karachi Shipyard & Engineering Works",
+          "role": "Internship",
+          "period": "Jan – Feb 2025",
+          "desc": "Assisted in observing shipbuilding processes including SLTS (Ship Lifting & Transfer System) and Yard Engineering operations. Learned mechanical inspections, assembly procedures, and systems testing. Participated in documentation, reporting, and understanding industrial workflows in shipbuilding.",
+          "logo": "/ksew.png",
+          "letter": "/internships/ksew.jpg"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "type": "Education",
+      "navTitle": "Education",
+      "data": [
+        {
+          "degree": "Bachelor of Engineering",
+          "school": "Mechatronics Engineering, KIET",
+          "year": "2022 – 2026",
+          "badge": "KIET",
+          "image": "/kiet.jpg",
+          "bgSize": "cover"
+        },
+        {
+          "degree": "Intermediate",
+          "school": "Govt. Dehli College Karachi",
+          "year": "2020 – 2022",
+          "badge": "DEHLI",
+          "image": "/dehli.jpg",
+          "bgSize": "cover"
+        },
+        {
+          "degree": "Matriculation",
+          "school": "U & V School System",
+          "year": "2018 – 2020",
+          "badge": "SCHOOL",
+          "image": "/uv.jpg",
+          "bgSize": "70%"
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "type": "Projects",
+      "navTitle": "Projects",
+      "data": [
+        {
+          "name": "Remote Controlled Car",
+          "desc": "Built an Arduino Nano-based 4WD RC car using TT motors, L298N motor driver, and Bluetooth module. Implemented forward, reverse, and differential steering, controlled via a custom mobile application.",
+          "tags": [
+            "Arduino Nano",
+            "L298N",
+            "Bluetooth",
+            "TT Motor",
+            "Embedded C++"
+          ],
+          "icon": "/projects/rc_car_icon.png"
+        },
+        {
+          "name": "Light Weight RoboWar",
+          "desc": "Designed and fabricated a lightweight RoboWar combat robot. Integrated a brushless motor with ESC for the weapon system and brushed ESC for drive motors, controlled using RF transmitter and receiver.",
+          "tags": [
+            "Brushless Motor",
+            "ESC",
+            "RF Transmitter",
+            "Fabrication",
+            "Mechanical Design"
+          ],
+          "icon": "/projects/robowar_icon.png"
+        },
+        {
+          "name": "Soccer Robot",
+          "desc": "Developed an ESP32-based soccer robot using built-in Wi-Fi for mobile control. Used metal gear motors with L298N motor driver for precise and responsive multi-directional movement.",
+          "tags": [
+            "ESP32",
+            "Wi-Fi",
+            "L298N",
+            "Metal Gear Motor",
+            "Mobile Control"
+          ],
+          "icon": "/projects/soccer_robot_icon.png"
+        },
+        {
+          "name": "Home Automation",
+          "desc": "Implemented IoT-based home automation using ESP32 with relay modules. Controlled appliances via mobile app over Wi-Fi.",
+          "tags": [
+            "ESP32",
+            "IoT",
+            "Wi-Fi",
+            "Relay"
+          ],
+          "icon": "/projects/home_auto_icon.png"
+        },
+        {
+          "name": "Fire & Safety System",
+          "desc": "Built an automated fire detection and suppression system using flame sensors, MQ-2 gas sensor, and servo-controlled water pump.",
+          "tags": [
+            "Arduino",
+            "Flame Sensor",
+            "MQ-2",
+            "Servo"
+          ],
+          "icon": "/projects/fire_safety_icon.png"
+        },
+        {
+          "name": "Line Following Robot",
+          "desc": "Designed and fabricated a high-speed LFR using a custom PCB developed in EasyEDA. Integrated Arduino Nano, QTR-8A IR sensor array, N20 motors, and DRV8835 motor driver with optimized PID control for precise tracking on complex tracks.",
+          "tags": [
+            "Arduino Nano",
+            "Custom PCB",
+            "EasyEDA",
+            "PID",
+            "QTR-8A",
+            "DRV8835"
+          ],
+          "icon": "/projects/line_following_icon.png"
+        },
+        {
+          "name": "Pipe Inspection Robot",
+          "desc": "Engineered a tripod-structured pipe inspection robot for safe navigation inside narrow pipelines. Implemented crack detection via image processing, odometry for distance tracking, and a real-time monitoring system for safety inspection.",
+          "tags": [
+            "Raspberry Pi",
+            "Image Processing",
+            "Crack Detection",
+            "Odometry",
+            "Python"
+          ],
+          "icon": "/projects/pipe_inspection_icon.png"
+        },
+        {
+          "name": "Smart Bike Accident Alert",
+          "desc": "Developed an intelligent accident detection system using ESP32, MPU6050, SIM800L GSM, and Neo-6M GPS. Implemented impact detection with user-confirmation via emergency button; automatically sends real-time GPS location to registered contacts if no response within a defined time frame.",
+          "tags": [
+            "ESP32",
+            "MPU6050",
+            "SIM800L",
+            "Neo-6M GPS",
+            "GSM",
+            "IoT"
+          ],
+          "icon": "/projects/bike_accident_icon.png"
+        }
+      ]
+    },
+    {
+      "id": "achievements",
+      "type": "Achievements",
+      "navTitle": "Achievements",
+      "data": [
+        {
+          "title": "AIRICE '25 – Runner Up (CAD Craze)",
+          "org": "Air University",
+          "badge": "Runner-Up",
+          "badgeType": "silver",
+          "points": [
+            "Secured Runner-Up position in CAD Craze at AIRICE '25.",
+            "Demonstrated advanced CAD modeling skills and structured design methodology under competitive constraints."
+          ],
+          "image": "/achienements/AIRICE CAD CRAZE RUNNER UP.png",
+          "extraImages": []
+        },
+        {
+          "title": "AIRICE '25 – Winner (Robo Soccer)",
+          "org": "Air University",
+          "badge": "1st Place",
+          "badgeType": "gold",
+          "points": [
+            "Won 1st place in Robo Soccer at AIRICE '25.",
+            "Developed a precision-controlled robotic system focused on strategy, responsiveness, and system optimization."
+          ],
+          "image": "/achienements/AIRICE ROBO SOCCER WINNER.png",
+          "extraImages": []
+        },
+        {
+          "title": "PROBATTLE 25 – Winner (Line Following Robot)",
+          "org": "PROBATTLE",
+          "badge": "1st Place",
+          "badgeType": "gold",
+          "points": [
+            "Achieved 1st position in Line Following Robot competition.",
+            "Engineered a high-speed autonomous robot with optimized sensor calibration and control algorithms."
+          ],
+          "image": "/achienements/PROBATTLE LFR WINNER.png",
+          "extraImages": []
+        },
+        {
+          "title": "DUETECH '25 – Runner Up (Robo Race)",
+          "org": "DUETECH",
+          "badge": "Runner-Up",
+          "badgeType": "silver",
+          "points": [
+            "Secured Runner-Up position in Robo Race.",
+            "Designed a mechanically optimized racing robot emphasizing speed, stability, and control efficiency."
+          ],
+          "image": "/achienements/DUETECH ROBO RACE RUNNER UP.png",
+          "extraImages": []
+        },
+        {
+          "title": "TEKNOFEST Pakistan – Excellence Award",
+          "org": "TEKNOFEST Pakistan",
+          "badge": "Excellence Award",
+          "badgeType": "special",
+          "points": [
+            "Awarded Excellence Award at TEKNOFEST Pakistan.",
+            "Recognized for innovation, technical execution, and performance at a national-level technology platform."
+          ],
+          "image": "/achienements/TEKNOFEST RUNNER UP CAD CRAZE.png",
+          "extraImages": []
+        },
+        {
+          "title": "SPEC '24 – Winner (Project Exhibition, KIET)",
+          "org": "KIET",
+          "badge": "1st Place",
+          "badgeType": "gold",
+          "points": [
+            "Won 1st position at SPEC'24 Semester Project Competition.",
+            "Presented an engineering solution evaluated for innovation, technical depth, and practical implementation."
+          ],
+          "image": "/achienements/KIET SPEC WINNER.png",
+          "extraImages": []
+        },
+        {
+          "title": "APEC '25 x MechTech '25 – Winner (Robo Soccer)",
+          "org": "APEC x MechTech",
+          "badge": "1st Place",
+          "badgeType": "gold",
+          "points": [
+            "Secured 1st place in Robo Soccer competition.",
+            "Focused on robotic control systems, strategy design, and hardware integration."
+          ],
+          "image": "/achienements/APEC ROBO SOCCER WINNER.png",
+          "extraImages": []
+        },
+        {
+          "title": "APEC '25 x MechTech '25 – Winner (RC Car)",
+          "org": "APEC x MechTech",
+          "badge": "1st Place",
+          "badgeType": "gold",
+          "points": [
+            "Won 1st position in RC Car competition.",
+            "Optimized mechanical structure and suspension system for speed and maneuverability."
+          ],
+          "image": "/achienements/APEC ROBO RACE WINNER.png",
+          "extraImages": []
+        },
+        {
+          "title": "Adamjee Coaching Centre – SSC Part-II (83%)",
+          "org": "Adamjee Coaching Centre",
+          "badge": "83%",
+          "badgeType": "academic",
+          "points": [
+            "Achieved 83% in SSC Part-II.",
+            "Demonstrated academic consistency and strong foundational performance."
+          ],
+          "image": "/achienements/SSC 2.png",
+          "extraImages": []
+        },
+        {
+          "title": "Adamjee Coaching Centre – HSC Part-I (90%)",
+          "org": "Adamjee Coaching Centre",
+          "badge": "90%",
+          "badgeType": "academic",
+          "points": [
+            "Secured 90% in HSC Part-I.",
+            "Maintained high academic standards alongside technical achievements."
+          ],
+          "image": "/achienements/HSC 1.png",
+          "extraImages": []
+        },
+        {
+          "title": "U & V School System – Annual Academic Achievements",
+          "org": "U & V School System",
+          "badge": "Top Position",
+          "badgeType": "academic",
+          "points": [
+            "Recognized for securing top positions in multiple academic sessions.",
+            "Maintained consistent academic excellence throughout early education."
+          ],
+          "image": "/achienements/13-14.png",
+          "extraImages": [
+            "/achienements/14-15.png",
+            "/achienements/15-16.png",
+            "/achienements/16-17.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "type": "Skills",
+      "navTitle": "Skills",
+      "data": [
+        {
+          "name": "SolidWorks",
+          "icon": "/icons/solidworks.png"
+        },
+        {
+          "name": "C++",
+          "icon": "/icons/cplusplus.svg"
+        },
+        {
+          "name": "Python",
+          "icon": "/icons/python.svg"
+        },
+        {
+          "name": "Arduino",
+          "icon": "/icons/arduino.svg"
+        },
+        {
+          "name": "Raspberry Pi",
+          "icon": "/icons/raspberrypi.svg"
+        },
+        {
+          "name": "ESP32",
+          "icon": "/icons/espressif.svg"
+        },
+        {
+          "name": "TIA Portal",
+          "icon": "/icons/siemens.svg"
+        },
+        {
+          "name": "Easy EDA",
+          "icon": "/icons/easyeda.svg"
+        },
+        {
+          "name": "Proteus",
+          "icon": "/icons/proteus.png"
+        },
+        {
+          "name": "Multisim",
+          "icon": "/icons/multisim.svg"
+        },
+        {
+          "name": "Thinker CAD",
+          "icon": "/icons/tinkercad.svg"
+        },
+        {
+          "name": "WPL Soft",
+          "icon": "/icons/delta.svg"
+        },
+        {
+          "name": "MATLAB",
+          "icon": "/icons/matlab.png"
+        },
+        {
+          "name": "MS Office",
+          "icon": "/icons/microsoftoffice.svg"
+        }
+      ]
+    },
+    {
+      "id": "certifications",
+      "type": "Certifications",
+      "navTitle": "Certifications",
+      "data": [
+        {
+          "title": "Generative AI Application Developer",
+          "provider": "Pakistan Engineering Council",
+          "badge": "Top Performer ⭐",
+          "image": "/certificates/cert-generative-ai.jpg"
+        },
+        {
+          "title": "Professional Industrial Automation",
+          "provider": "AutoCon — Siemens S71200",
+          "badge": "PLC & SCADA",
+          "image": "/certificates/cert-plc-automation.jpg"
+        },
+        {
+          "title": "Crash Course on Python",
+          "provider": "Google / Coursera",
+          "badge": "Aug 2023",
+          "image": "/certificates/cert-python.jpg"
+        },
+        {
+          "title": "What is Data Science?",
+          "provider": "IBM / Coursera",
+          "badge": "Aug 2023",
+          "image": "/certificates/cert-data-science.jpg"
+        },
+        {
+          "title": "Machine Learning for All",
+          "provider": "University of London / Coursera",
+          "badge": "Oct 2023",
+          "image": "/certificates/cert-machine-learning.jpg"
+        },
+        {
+          "title": "PCB Design",
+          "provider": "KIET — IMR Lab",
+          "badge": "Jan 2024",
+          "image": "/certificates/cert-pcb-design.jpg"
+        },
+        {
+          "title": "Developing CubeSats",
+          "provider": "NCGSA / PAF-KIET",
+          "badge": "Mar 2023",
+          "image": "/certificates/cert-cubesat.jpg"
+        },
+        {
+          "title": "Microcontroller vs Microprocessor",
+          "provider": "Embedded Edge Academy",
+          "badge": "Mar 2025",
+          "image": "/certificates/cert-microcontroller.jpg"
+        },
+        {
+          "title": "Robo Race Certificate",
+          "provider": "DUETECH",
+          "badge": "Robo Race",
+          "image": "/certificates/cert-roborace.jpg"
+        },
+        {
+          "title": "Arduino for Beginners",
+          "provider": "Arduino Basics",
+          "badge": "Arduino",
+          "image": "/certificates/arduino-for-beginners.jpg"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "type": "Contact",
+      "navTitle": "Contact",
+      "data": {
+        "email": "Khubaibsalman2004@gmail.com",
+        "linkedIn": "https://www.linkedin.com/in/khubaib-salman-3a09ab251/",
+        "introText": "I am always looking for interesting projects and collaborations in robotics and automation."
+      }
+    }
+  ]
+}

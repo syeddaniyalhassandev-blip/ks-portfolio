@@ -4,58 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Section from "./Section";
 import Image from "next/image";
 
-const certificationsData = [
-  { 
-    title: "Generative AI Application Developer", 
-    provider: "Pakistan Engineering Council",
-    badge: "Top Performer ⭐",
-    image: "/certificates/cert-generative-ai.jpg"
-  },
-  { 
-    title: "Professional Industrial Automation",
-    provider: "AutoCon — Siemens S71200",
-    badge: "PLC & SCADA",
-    image: "/certificates/cert-plc-automation.jpg"
-  },
-  { 
-    title: "Crash Course on Python", 
-    provider: "Google / Coursera",
-    badge: "Aug 2023",
-    image: "/certificates/cert-python.jpg"
-  },
-  { 
-    title: "What is Data Science?", 
-    provider: "IBM / Coursera",
-    badge: "Aug 2023",
-    image: "/certificates/cert-data-science.jpg"
-  },
-  { 
-    title: "Machine Learning for All", 
-    provider: "University of London / Coursera",
-    badge: "Oct 2023",
-    image: "/certificates/cert-machine-learning.jpg"
-  },
-  { 
-    title: "PCB Design", 
-    provider: "KIET — IMR Lab",
-    badge: "Jan 2024",
-    image: "/certificates/cert-pcb-design.jpg"
-  },
-  { 
-    title: "Developing CubeSats",
-    provider: "NCGSA / PAF-KIET",
-    badge: "Mar 2023",
-    image: "/certificates/cert-cubesat.jpg"
-  },
-  { 
-    title: "Microcontroller vs Microprocessor",
-    provider: "Embedded Edge Academy",
-    badge: "Mar 2025",
-    image: "/certificates/cert-microcontroller.jpg"
-  }
-];
-
-export default function Certifications() {
+export default function Certifications({ data, id }) {
+  const certificationsData = data || [];
   const [selected, setSelected] = useState(null);
   const [zoom, setZoom] = useState(1);
   const scrollRef = useRef(null);
@@ -84,7 +34,7 @@ export default function Certifications() {
   const handleClose = () => { setSelected(null); setZoom(1); };
 
   return (
-    <Section id="certifications" title="Certifications">
+    <Section id={id || "certifications"} title="Certifications">
 
       {/* Lightbox Modal */}
       {selected !== null && (

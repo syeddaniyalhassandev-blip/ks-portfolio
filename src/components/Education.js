@@ -2,36 +2,10 @@
 
 import Section from "./Section";
 
-const educationData = [
-  {
-    degree: "Bachelor of Engineering",
-    school: "Mechatronics Engineering, KIET",
-    year: "2022 – 2026",
-    badge: "KIET",
-    image: "/kiet.jpg",
-    bgSize: "cover"
-  },
-  {
-    degree: "Intermediate",
-    school: "Govt. Dehli College Karachi",
-    year: "2020 – 2022",
-    badge: "DEHLI",
-    image: "/dehli.jpg",
-    bgSize: "cover"
-  },
-  {
-    degree: "Matriculation",
-    school: "U & V School System",
-    year: "2018 – 2020",
-    badge: "SCHOOL",
-    image: "/uv.jpg",
-    bgSize: "70%"
-  }
-];
-
-export default function Education() {
+export default function Education({ data, id }) {
+  const educationData = data || [];
   return (
-    <Section id="education" title="Education">
+    <Section id={id || "education"} title="Education">
       <div className="grid md:grid-cols-3 gap-8">
         {educationData.map((edu, i) => (
           <div

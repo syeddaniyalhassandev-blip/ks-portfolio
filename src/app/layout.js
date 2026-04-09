@@ -1,6 +1,8 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import fs from 'fs';
+import path from 'path';
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -13,10 +15,21 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const dataFile = path.join(process.cwd(), 'src', 'data', 'portfolio.json');
+  let navLinks = [];
+  try {
+    const fileContents = fs.readFileSync(dataFile, 'utf8');
+    const portfolioData = JSON.parse(fileContents);
+    navLinks = (portfolioData.sections || []).map(s => ({
+      name: s.navTitle,
+      href: s.type === 'Hero' ? '#home' : `#${s.id}`
+    }));
+  } catch(e) {}
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${montserrat.className} antialiased selection:bg-primary/20`} suppressHydrationWarning>
-        <Navbar />
+        <Navbar navLinks={navLinks} />
         {children}
       </body>
     </html>

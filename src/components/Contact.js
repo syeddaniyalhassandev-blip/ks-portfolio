@@ -4,7 +4,7 @@ import Section from "./Section";
 import { Linkedin, Mail } from "lucide-react";
 import { useState } from "react";
 
-export default function Contact() {
+export default function Contact({ data, id }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState(null); // null | "sending" | "sent" | "error"
 
@@ -14,7 +14,7 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("https://formsubmit.co/ajax/Khubaibsalman2004@gmail.com", {
+      const res = await fetch(`https://formsubmit.co/ajax/${data?.email || "Khubaibsalman2004@gmail.com"}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
@@ -37,22 +37,22 @@ export default function Contact() {
   };
 
   return (
-    <Section id="contact" title="Get in Touch">
+    <Section id={id || "contact"} title="Get in Touch">
       <div className="text-center max-w-3xl mx-auto">
         <h3 className="text-base sm:text-lg font-black tracking-tighter mb-6 uppercase">Contact Me</h3>
         <p className="text-sm text-foreground/60 font-medium mb-10 leading-relaxed">
-          I am always looking for interesting projects and collaborations in robotics and automation.
+          {data?.introText || "I am always looking for interesting projects and collaborations in robotics and automation."}
         </p>
         
         <div className="flex justify-center gap-6 md:gap-10 mb-16">
-           <a href="https://www.linkedin.com/in/khubaib-salman-3a09ab251/" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
+           <a href={data?.linkedIn || "https://www.linkedin.com/in/khubaib-salman-3a09ab251/"} target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
               <div className="w-14 h-14 rounded-2xl bg-white/5 border border-black/5 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-300 group-hover:-translate-y-1 shadow-lg shadow-black/5">
                 <Linkedin className="w-6 h-6 text-foreground/40 group-hover:text-primary transition-colors" />
               </div>
               <span className="font-black uppercase tracking-[0.2em] text-[10px] text-foreground/40 group-hover:text-primary transition-colors">LinkedIn</span>
            </a>
 
-           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Khubaibsalman2004@gmail.com" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
+           <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${data?.email || "Khubaibsalman2004@gmail.com"}`} target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center gap-3">
               <div className="w-14 h-14 rounded-2xl bg-white/5 border border-black/5 flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-300 group-hover:-translate-y-1 shadow-lg shadow-black/5">
                 <Mail className="w-6 h-6 text-foreground/40 group-hover:text-primary transition-colors" />
               </div>
