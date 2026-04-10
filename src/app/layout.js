@@ -1,8 +1,7 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import fs from 'fs';
-import path from 'path';
+import prisma from "@/lib/prisma";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

@@ -22,6 +22,17 @@ export async function POST(request) {
   }
 }
 
+export async function GET() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('admin_token');
+  
+  if (token && token.value === 'authenticated') {
+    return NextResponse.json({ authenticated: true });
+  }
+  
+  return NextResponse.json({ authenticated: false });
+}
+
 export async function DELETE() {
   const cookieStore = await cookies();
   cookieStore.delete('admin_token');

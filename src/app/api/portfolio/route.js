@@ -80,25 +80,28 @@ export async function POST(request) {
     const body = await request.json();
     const newSections = body.sections || [];
 
-    // 3. Update Database (Transaction to ensure atomic update)
-    await prisma.$transaction([
-        prisma.portfolioSection.deleteMany(), // Clear old
-        ...newSections.map((section, index) => 
-            prisma.portfolioSection.create({
-                data: {
-                    id: section.id,
-                    type: section.type,
-                    navTitle: section.navTitle,
-                    data: section.data,
-                    order: index
-                }
-            })
-        )
-    ]);
+    // 3. Update Database 
+    // Optimization: We remove the explicit transaction here because some cloud DBs 
+    // (like db.prisma.io) have trouble starting transactions within time limits on low tiers.
+    // For a single-user portfolio, sequential operations are safe and faster.
+    
+    await prisma.portfolioSection.deleteMany(); // Clear old
+    
+    if (newSections.length > 0) {
+        await prisma.portfolioSection.createMany({
+            data: newSections.map((section, index) => ({
+                id: section.id,
+                type: section.type,
+                navTitle: section.navTitle,
+                data: JSON.parse(JSON.stringify(section.data)), // Ensure it's a clean JSON object
+                order: index
+            }))
+        });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error writing portfolio to Prisma", error);
-    return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
+    console.error("CRITICAL ERROR: Failed to write portfolio to Prisma", error);
+    return NextResponse.json({ error: "Failed to save data", details: error.message }, { status: 500 });
   }
 }

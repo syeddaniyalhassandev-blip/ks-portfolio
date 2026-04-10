@@ -2,13 +2,28 @@
 
 import { useState, useEffect } from 'react';
 import { usePortfolio } from '@/hooks/usePortfolio';
-import { LogOut, Save, Plus, Trash2, Upload, LayoutDashboard, ArrowUp, ArrowDown } from 'lucide-react';
+import { LogOut, Save, Plus, Trash2, Upload, LayoutDashboard, ArrowUp, ArrowDown, Menu, X } from 'lucide-react';
 import Swal from 'sweetalert2';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuth] = useState(false);
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth');
+        const data = await res.json();
+        if (data.authenticated) {
+          setIsAuth(true);
+        }
+      } catch (e) {}
+      setCheckingAuth(false);
+    };
+    checkAuth();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +39,10 @@ export default function AdminPage() {
       setLoginError('Incorrect password');
     }
   };
+
+  if (checkingAuth) {
+    return <div className="min-h-screen bg-[#f4f6f8] flex items-center justify-center text-gray-400 font-bold uppercase tracking-widest">Verifying Session...</div>;
+  }
 
   if (!isAuthenticated) {
     return (
@@ -56,10 +75,23 @@ function AdminDashboard({ onLogout }) {
   const [formData, setFormData] = useState(null);
   const [saving, setSaving] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (data) setFormData(JSON.parse(JSON.stringify(data)));
   }, [data]);
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
 
   const handleLogout = async () => {
     await fetch('/api/auth', { method: 'DELETE' });
@@ -75,21 +107,23 @@ function AdminDashboard({ onLogout }) {
         body: JSON.stringify(formData)
       });
       if (res.ok) {
-        Swal.fire({
+        Toast.fire({
           icon: 'success',
-          title: 'Saved!',
-          text: 'Layout & Content saved successfully',
-          timer: 1500,
-          showConfirmButton: false,
-          background: '#fff',
-          color: '#111'
+          title: 'Changes Published!'
         });
         refetch();
       } else {
-        Swal.fire({ icon: 'error', title: 'Oops...', text: 'Failed to save', background: '#fff', color: '#111' });
+        Toast.fire({
+          icon: 'error',
+          title: 'Failed to Save Data'
+        });
       }
-    } catch (e) {
-      Swal.fire({ icon: 'error', title: 'Oops...', text: 'Error saving: ' + e.message, background: '#fff', color: '#111' });
+    } catch (error) {
+      console.error(error);
+      Toast.fire({
+        icon: 'error',
+        title: 'Connection Error'
+      });
     }
     setSaving(false);
   };
@@ -183,12 +217,31 @@ function AdminDashboard({ onLogout }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f6f8] text-gray-900 flex flex-col md:flex-row font-medium">
+    <div className="min-h-screen bg-[#f4f6f8] text-gray-900 flex flex-col md:flex-row font-medium relative overflow-hidden">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm transition-opacity"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar Layout Builder */}
-      <div className="w-full md:w-72 bg-white border-r border-gray-200 p-4 flex flex-col h-screen overflow-y-auto shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-10 shrink-0">
-        <div className="flex items-center gap-3 mb-6 px-2 mt-4">
-          <LayoutDashboard className="text-primary" />
-          <h2 className="font-black text-lg uppercase tracking-widest text-gray-900">Page Builder</h2>
+      <div className={`
+        fixed md:static inset-y-0 left-0 w-72 bg-white border-r border-gray-200 p-4 flex flex-col h-screen overflow-y-auto shadow-2xl md:shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-50 shrink-0 transition-transform duration-300 ease-in-out
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        <div className="flex items-center justify-between mb-6 px-2 mt-4">
+          <div className="flex items-center gap-3">
+            <LayoutDashboard className="text-primary" />
+            <h2 className="font-black text-lg uppercase tracking-widest text-gray-900">Page Builder</h2>
+          </div>
+          <button 
+            onClick={() => setIsSidebarOpen(false)}
+            className="md:hidden p-2 hover:bg-gray-100 rounded-lg text-gray-400"
+          >
+            <X size={20} />
+          </button>
         </div>
         
         <div className="flex-grow space-y-2">
@@ -236,19 +289,32 @@ function AdminDashboard({ onLogout }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow flex flex-col h-screen overflow-hidden bg-[#f4f6f8]">
+      <div className="flex-grow flex flex-col h-screen overflow-hidden bg-[#f4f6f8] w-full min-w-0">
         {/* Topbar */}
-        <div className="h-20 border-b border-gray-200 flex items-center justify-between px-8 bg-white/50 backdrop-blur-md shrink-0">
-          <div className="flex items-center gap-4">
-            <h1 className="text-xl font-black uppercase tracking-widest text-primary">Edit Block</h1>
-            <span className="bg-gray-900 text-white px-3 py-1 rounded text-xs font-mono font-bold">{activeSection?.type}</span>
+        <div className="min-h-20 border-b border-gray-200 flex items-center justify-between px-4 md:px-8 bg-white/50 backdrop-blur-md shrink-0 py-2 gap-4">
+          <div className="flex items-center gap-2 md:gap-4 min-w-0">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 hover:bg-gray-100 rounded-lg text-gray-600 transition-colors"
+            >
+              <Menu size={24} />
+            </button>
+            <div className="flex items-center gap-2 overflow-hidden">
+              <h1 className="text-xl font-black uppercase tracking-widest text-primary hidden lg:block shrink-0">Edit Block</h1>
+              <h1 className="text-sm font-black uppercase tracking-widest text-primary lg:hidden hidden xs:block shrink-0">Edit</h1>
+              <span className="bg-gray-900 text-white px-3 py-1 rounded text-[10px] font-mono font-bold uppercase truncate shadow-sm shrink-0">
+                {activeSection?.type}
+              </span>
+            </div>
           </div>
+          
           <button 
             onClick={handleSave} 
             disabled={saving}
-            className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-black flex items-center gap-2 uppercase tracking-widest shadow-[0_4px_12px_rgba(52,152,219,0.3)] hover:shadow-[0_6px_16px_rgba(52,152,219,0.4)] transition-all disabled:opacity-50"
+            className="bg-primary hover:bg-primary/90 text-white px-4 md:px-6 py-2.5 rounded-xl font-black flex items-center gap-2 uppercase text-[10px] md:text-xs tracking-widest shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 shrink-0"
           >
-            <Save size={18} /> {saving ? 'Saving...' : 'Save & Publish'}
+            <Save size={14} className="md:w-4 md:h-4" /> 
+            <span>{saving ? '...' : 'Save & Publish'}</span>
           </button>
         </div>
 
