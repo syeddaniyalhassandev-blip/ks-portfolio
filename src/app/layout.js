@@ -17,15 +17,17 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   let navLinks = [];
   try {
-    const portfolioData = await kv.get('portfolio_data');
-    if (portfolioData && portfolioData.sections) {
-      navLinks = portfolioData.sections.map(s => ({
+    const sections = await prisma.portfolioSection.findMany({
+      orderBy: { order: 'asc' }
+    });
+    if (sections && sections.length > 0) {
+      navLinks = sections.map(s => ({
         name: s.navTitle,
         href: s.type === 'Hero' ? '#home' : `#${s.id}`
       }));
     }
   } catch(e) {
-    console.error("Error fetching nav links from KV", e);
+    console.error("Error fetching nav links from Prisma", e);
   }
 
   return (
