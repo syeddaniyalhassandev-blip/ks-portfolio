@@ -389,7 +389,7 @@ function AdminDashboard({ onLogout }) {
                     <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Paragraphs (Double newline separated)</label>
                     <textarea rows={6} value={(activeSection.data.content || []).join('\n\n')} onChange={e => updateSectionData({...activeSection.data, content: e.target.value.split('\n\n')})} className="w-full bg-gray-50 border border-gray-200 rounded-xl p-6 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow leading-relaxed text-sm" />
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-6">
                     <div className="flex-1">
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Image URL (Optional)</label>
                       <div className="flex gap-2">
@@ -400,6 +400,14 @@ function AdminDashboard({ onLogout }) {
                         </label>
                       </div>
                     </div>
+                    {activeSection.data.image && (
+                      <div className="shrink-0">
+                        <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Preview</label>
+                        <div className="w-24 h-24 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center p-1">
+                          <img src={activeSection.data.image} alt="Preview" className="w-full h-full object-cover rounded-lg" />
+                        </div>
+                      </div>
+                    )}
                     <div>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Image Position</label>
                       <select value={activeSection.data.imagePos || 'right'} onChange={e => updateSectionData({...activeSection.data, imagePos: e.target.value})} className="bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow text-sm h-[46px] text-gray-900 cursor-pointer">
@@ -605,12 +613,19 @@ function ArrayEditor({ items, onChange, template, fields, onUpload }) {
                 )}
 
                 {field.type === 'image' && (
-                  <div className="flex gap-2">
-                    <input type="text" value={item[field.key] || ''} onChange={e => updateItem(idx, field.key, e.target.value)} className="flex-grow bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
-                    <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 px-4 rounded-xl flex items-center justify-center cursor-pointer transition-colors text-gray-700" title="Upload">
-                      <Upload size={16} />
-                      <input type="file" accept="image/*,.pdf" className="hidden" onChange={e => onUpload(e, url => updateItem(idx, field.key, url))} />
-                    </label>
+                  <div className="space-y-3">
+                    <div className="flex gap-2">
+                      <input type="text" value={item[field.key] || ''} onChange={e => updateItem(idx, field.key, e.target.value)} className="flex-grow bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
+                      <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 px-4 rounded-xl flex items-center justify-center cursor-pointer transition-colors text-gray-700" title="Upload">
+                        <Upload size={16} />
+                        <input type="file" accept="image/*,.pdf" className="hidden" onChange={e => onUpload(e, url => updateItem(idx, field.key, url))} />
+                      </label>
+                    </div>
+                    {item[field.key] && item[field.key].match(/\.(jpeg|jpg|gif|png|webp|svg)$/i) && (
+                      <div className="relative w-20 h-20 rounded-lg border border-gray-100 overflow-hidden bg-gray-50 group-hover:border-primary/20">
+                         <img src={item[field.key]} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
