@@ -73,13 +73,20 @@ export default function AdminPage() {
 function AdminDashboard({ onLogout }) {
   const { data, loading, refetch } = usePortfolio();
   const [formData, setFormData] = useState(null);
-  const [saving, setSaving] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [pendingFiles, setPendingFiles] = useState({}); // { localUrl: File }
 
   useEffect(() => {
     if (data) setFormData(JSON.parse(JSON.stringify(data)));
   }, [data]);
+
+  // Clean up blob URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      Object.keys(pendingFiles).forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [pendingFiles]);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -98,51 +105,89 @@ function AdminDashboard({ onLogout }) {
     onLogout();
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch('/api/portfolio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      if (res.ok) {
-        Toast.fire({
-          icon: 'success',
-          title: 'Changes Published!'
-        });
-        refetch();
-      } else {
-        Toast.fire({
-          icon: 'error',
-          title: 'Failed to Save Data'
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      Toast.fire({
-        icon: 'error',
-        title: 'Connection Error'
-      });
-    }
-    setSaving(false);
-  };
-
-  const handleFileUpload = async (e, callback) => {
+  const handleFileUpload = (e, callback) => {
     const file = e.target.files?.[0];
     if (!file) return;
     
-    const fd = new FormData();
-    fd.append('file', file);
+    // Create local preview URL
+    const localUrl = URL.createObjectURL(file);
     
-    const res = await fetch('/api/upload', { method: 'POST', body: fd });
-    if (res.ok) {
-      const { url } = await res.json();
-      callback(url);
-      Swal.fire({ icon: 'success', title: 'Uploaded!', timer: 800, showConfirmButton: false, background: '#fff', color: '#111' });
-    } else {
-      Swal.fire({ icon: 'error', title: 'Oops...', text: 'Upload failed', background: '#fff', color: '#111' });
+    // Track for later upload
+    setPendingFiles(prev => ({ ...prev, [localUrl]: file }));
+    
+    // Update UI immediately with local preview
+    callback(localUrl);
+    
+    Toast.fire({ 
+      icon: 'info', 
+      title: 'Preview Loaded', 
+      text: 'Image will be uploaded when you Save.' 
+    });
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    let finalData = JSON.parse(JSON.stringify(formData));
+    
+    try {
+      // 1. Process Pending Uploads
+      const uploadPromises = [];
+      const uploadsToRun = [];
+
+      // Helper to find blob URLs recursively
+      const findBlobs = (obj, path = []) => {
+        if (!obj || typeof obj !== 'object') return;
+        
+        Object.entries(obj).forEach(([key, value]) => {
+          if (typeof value === 'string' && value.startsWith('blob:')) {
+            uploadsToRun.push({ obj, key, localUrl: value });
+          } else if (typeof value === 'object') {
+            findBlobs(value);
+          }
+        });
+      };
+
+      findBlobs(finalData.sections);
+
+      // 2. Perform Uploads
+      if (uploadsToRun.length > 0) {
+        Toast.fire({ icon: 'info', title: `Uploading ${uploadsToRun.length} images...` });
+        
+        for (const item of uploadsToRun) {
+          const file = pendingFiles[item.localUrl];
+          if (!file) continue;
+
+          const fd = new FormData();
+          fd.append('file', file);
+
+          const upRes = await fetch('/api/upload', { method: 'POST', body: fd });
+          if (!upRes.ok) throw new Error(`Failed to upload ${file.name}`);
+          
+          const { url: remoteUrl } = await upRes.json();
+          item.obj[item.key] = remoteUrl; // Replace local blob with remote URL
+        }
+      }
+
+      // 3. Save Final Data to Prisma
+      const res = await fetch('/api/portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(finalData)
+      });
+
+      if (res.ok) {
+        Toast.fire({ icon: 'success', title: 'Changes Published!' });
+        setPendingFiles({}); // Clear pending uploads
+        refetch();
+      } else {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to Save Data');
+      }
+    } catch (error) {
+      console.error(error);
+      Toast.fire({ icon: 'error', title: 'Save Failed', text: error.message });
     }
+    setSaving(false);
   };
 
   if (loading || !formData) return <div className="min-h-screen bg-[#f4f6f8] flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest">Loading Editor...</div>;
