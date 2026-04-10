@@ -1,17 +1,36 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { kv } from '@vercel/kv';
 import fs from 'fs';
 import path from 'path';
 
-const DATA_FILE = path.join(process.cwd(), 'src', 'data', 'portfolio.json');
-
 export async function GET() {
   try {
-    const fileContents = fs.readFileSync(DATA_FILE, 'utf8');
-    const data = JSON.parse(fileContents);
+    let data = await kv.get('portfolio_data');
+    
+    // Automatic Seeding: If KV is empty, try to seed from local file
+    if (!data) {
+        try {
+            const dataFile = path.join(process.cwd(), 'src', 'data', 'portfolio.json');
+            if (fs.existsSync(dataFile)) {
+                const fileContents = fs.readFileSync(dataFile, 'utf8');
+                data = JSON.parse(fileContents);
+                if (data) {
+                    await kv.set('portfolio_data', data);
+                    console.log("KV Seeded from local portfolio.json");
+                }
+            }
+        } catch (seedError) {
+            console.error("Failed to seed KV", seedError);
+        }
+    }
+
+    if (!data) {
+        return NextResponse.json({ sections: [] });
+    }
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error reading portfolio.json", error);
+    console.error("Error reading portfolio from KV", error);
     return NextResponse.json({ error: "Failed to load portfolio data" }, { status: 500 });
   }
 }
@@ -29,12 +48,12 @@ export async function POST(request) {
     // 2. Read new data
     const newData = await request.json();
 
-    // 3. Save to file
-    fs.writeFileSync(DATA_FILE, JSON.stringify(newData, null, 2), 'utf8');
+    // 3. Save to KV
+    await kv.set('portfolio_data', newData);
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error writing portfolio.json", error);
+    console.error("Error writing portfolio to KV", error);
     return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
   }
 }

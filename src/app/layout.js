@@ -14,17 +14,19 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
-  const dataFile = path.join(process.cwd(), 'src', 'data', 'portfolio.json');
+export default async function RootLayout({ children }) {
   let navLinks = [];
   try {
-    const fileContents = fs.readFileSync(dataFile, 'utf8');
-    const portfolioData = JSON.parse(fileContents);
-    navLinks = (portfolioData.sections || []).map(s => ({
-      name: s.navTitle,
-      href: s.type === 'Hero' ? '#home' : `#${s.id}`
-    }));
-  } catch(e) {}
+    const portfolioData = await kv.get('portfolio_data');
+    if (portfolioData && portfolioData.sections) {
+      navLinks = portfolioData.sections.map(s => ({
+        name: s.navTitle,
+        href: s.type === 'Hero' ? '#home' : `#${s.id}`
+      }));
+    }
+  } catch(e) {
+    console.error("Error fetching nav links from KV", e);
+  }
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
