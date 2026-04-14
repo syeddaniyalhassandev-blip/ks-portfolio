@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { usePortfolio } from '@/hooks/usePortfolio';
 import { LogOut, Save, Plus, Trash2, Upload, LayoutDashboard, ArrowUp, ArrowDown, Menu, X } from 'lucide-react';
 import Swal from 'sweetalert2';
@@ -75,6 +76,7 @@ function AdminDashboard({ onLogout }) {
   const [formData, setFormData] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [pendingFiles, setPendingFiles] = useState({}); // { localUrl: File }
 
   useEffect(() => {
@@ -289,7 +291,7 @@ function AdminDashboard({ onLogout }) {
           </button>
         </div>
         
-        <div className="flex-grow space-y-2">
+        <div className="grow space-y-2">
           {sections.map((section, idx) => (
             <div 
               key={section.id}
@@ -297,7 +299,7 @@ function AdminDashboard({ onLogout }) {
             >
               <button 
                 onClick={() => setActiveIndex(idx)}
-                className={`flex-grow text-left font-bold text-sm tracking-widest truncate mr-2 ${activeIndex === idx ? 'text-primary' : 'text-gray-700'}`}
+                className={`grow text-left font-bold text-sm tracking-widest truncate mr-2 ${activeIndex === idx ? 'text-primary' : 'text-gray-700'}`}
               >
                 {section.navTitle || section.type}
                 <span className="block text-[9px] text-gray-400 uppercase mt-1">{section.type}</span>
@@ -334,7 +336,7 @@ function AdminDashboard({ onLogout }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow flex flex-col h-screen overflow-hidden bg-[#f4f6f8] w-full min-w-0">
+      <div className="grow flex flex-col h-screen overflow-hidden bg-[#f4f6f8] w-full min-w-0">
         {/* Topbar */}
         <div className="min-h-20 border-b border-gray-200 flex items-center justify-between px-4 md:px-8 bg-white/50 backdrop-blur-md shrink-0 py-2 gap-4">
           <div className="flex items-center gap-2 md:gap-4 min-w-0">
@@ -365,7 +367,7 @@ function AdminDashboard({ onLogout }) {
 
         {/* Editor Area */}
         {activeSection && (
-          <div className="flex-grow p-8 overflow-y-auto">
+          <div className="grow p-8 overflow-y-auto">
             <div className="max-w-4xl mx-auto space-y-8 pb-20">
               
               {/* METADATA EDITOR (Nav Title & HTML ID) */}
@@ -380,7 +382,7 @@ function AdminDashboard({ onLogout }) {
                 </div>
               </div>
 
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-8" />
+              <div className="w-full h-px bg-linear-to-r from-transparent via-gray-300 to-transparent my-8" />
 
               {/* DYNAMIC COMPONENT EDITOR */}
 
@@ -393,7 +395,7 @@ function AdminDashboard({ onLogout }) {
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">CV Path (PDF URL)</label>
                     <div className="flex gap-4">
-                      <input type="text" value={activeSection.data.cvPath || ''} onChange={e => updateSectionData({...activeSection.data, cvPath: e.target.value})} className="flex-grow bg-gray-50 border border-gray-200 rounded-xl p-4 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
+                      <input type="text" value={activeSection.data.cvPath || ''} onChange={e => updateSectionData({...activeSection.data, cvPath: e.target.value})} className="grow bg-gray-50 border border-gray-200 rounded-xl p-4 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
                       <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 px-6 rounded-xl flex items-center gap-2 cursor-pointer transition-colors font-bold text-sm uppercase text-gray-700">
                         <Upload size={16} /> Upload
                         <input type="file" accept=".pdf" className="hidden" onChange={e => handleFileUpload(e, url => updateSectionData({...activeSection.data, cvPath: url}))} />
@@ -438,7 +440,7 @@ function AdminDashboard({ onLogout }) {
                     <div className="flex-1">
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Image URL (Optional)</label>
                       <div className="flex gap-2">
-                        <input type="text" value={activeSection.data.image || ''} onChange={e => updateSectionData({...activeSection.data, image: e.target.value})} className="flex-grow bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow text-sm" />
+                        <input type="text" value={activeSection.data.image || ''} onChange={e => updateSectionData({...activeSection.data, image: e.target.value})} className="grow bg-gray-50 border border-gray-200 rounded-xl p-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow text-sm" />
                         <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 px-4 rounded-xl flex items-center justify-center cursor-pointer transition-colors text-gray-700" title="Upload">
                           <Upload size={16} />
                           <input type="file" accept="image/*" className="hidden" onChange={e => handleFileUpload(e, url => updateSectionData({...activeSection.data, image: url}))} />
@@ -449,7 +451,7 @@ function AdminDashboard({ onLogout }) {
                       <div className="shrink-0">
                         <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Preview</label>
                         <div className="w-24 h-24 rounded-xl border border-gray-200 overflow-hidden bg-gray-50 flex items-center justify-center p-1">
-                          <img src={activeSection.data.image} alt="Preview" className="w-full h-full object-cover rounded-lg" />
+                          <Image src={activeSection.data.image} alt="Preview" className="w-full h-full object-cover rounded-lg" width={96} height={96} unoptimized />
                         </div>
                       </div>
                     )}
@@ -660,7 +662,7 @@ function ArrayEditor({ items, onChange, template, fields, onUpload }) {
                 {field.type === 'image' && (
                   <div className="space-y-3">
                     <div className="flex gap-2">
-                      <input type="text" value={item[field.key] || ''} onChange={e => updateItem(idx, field.key, e.target.value)} className="flex-grow bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
+                      <input type="text" value={item[field.key] || ''} onChange={e => updateItem(idx, field.key, e.target.value)} className="grow bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" />
                       <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 px-4 rounded-xl flex items-center justify-center cursor-pointer transition-colors text-gray-700" title="Upload">
                         <Upload size={16} />
                         <input type="file" accept="image/*,.pdf" className="hidden" onChange={e => onUpload(e, url => updateItem(idx, field.key, url))} />
@@ -668,7 +670,7 @@ function ArrayEditor({ items, onChange, template, fields, onUpload }) {
                     </div>
                     {item[field.key] && item[field.key].match(/\.(jpeg|jpg|gif|png|webp|svg)$/i) && (
                       <div className="relative w-20 h-20 rounded-lg border border-gray-100 overflow-hidden bg-gray-50 group-hover:border-primary/20">
-                         <img src={item[field.key]} alt="Preview" className="w-full h-full object-cover" />
+                         <Image src={item[field.key]} alt="Preview" className="w-full h-full object-cover" width={80} height={80} unoptimized />
                       </div>
                     )}
                   </div>
