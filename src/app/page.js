@@ -2,6 +2,8 @@ import Footer from "@/components/Footer";
 import { SectionMap } from '@/components/SectionMap';
 import prisma from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic'; // Never cache this page — always show latest data
+
 export default async function Home() {
   let sections = [];
   

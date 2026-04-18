@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { kv } from '@vercel/kv';
 import fs from 'fs';
@@ -98,6 +99,9 @@ export async function POST(request) {
             }))
         });
     }
+
+    // 4. Revalidate public site so order change is visible immediately
+    revalidatePath('/');
 
     return NextResponse.json({ success: true });
   } catch (error) {
