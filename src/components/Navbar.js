@@ -29,7 +29,7 @@ export default function Navbar({ navLinks = [] }) {
           {/* Logo / Name */}
           <a
             href="#home"
-            className={`text-2xl font-black uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
+            className={`text-3xl font-black uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
           >
             KS
           </a>
@@ -83,7 +83,7 @@ export default function Navbar({ navLinks = [] }) {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass absolute top-full left-0 right-0 py-6"
+          className="md:hidden bg-white shadow-xl border-t border-gray-100 absolute top-full left-0 right-0 py-6"
         >
           <div className="flex flex-col items-center space-y-5">
             {navLinks.map((link) => (
