@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -8,12 +8,29 @@ import { usePathname } from "next/navigation";
 export default function Navbar({ navLinks = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
+  const exploreRef = useRef(null);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close explore dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (exploreRef.current && !exploreRef.current.contains(e.target)) {
+        setExploreOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   if (pathname?.startsWith("/admin")) return null;
@@ -26,7 +43,7 @@ export default function Navbar({ navLinks = [] }) {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center h-16">
-          {/* Logo / Name */}
+          {/* Logo */}
           <a
             href="#home"
             className={`text-3xl font-black uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
@@ -40,28 +57,45 @@ export default function Navbar({ navLinks = [] }) {
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary ${ scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
+                className={`text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
               >
                 {link.name}
               </a>
             ))}
-            
+
             {navLinks.length > 3 && (
-              <div className="relative group">
-                <button className={`flex items-center gap-1 text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary focus:outline-none ${ scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}>
-                  Explore <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+              <div className="relative" ref={exploreRef}>
+                <button
+                  onClick={() => setExploreOpen(prev => !prev)}
+                  className={`flex items-center gap-1 text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary focus:outline-none ${scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
+                >
+                  Explore
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-300 ${exploreOpen ? 'rotate-180' : ''}`}
+                  />
                 </button>
-                <div className="absolute right-0 top-full mt-6 w-48 py-2 rounded-xl bg-background border border-foreground/10 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 text-left">
-                  {navLinks.slice(3).map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="block px-5 py-3 text-xs font-bold uppercase tracking-widest text-foreground/70 hover:text-primary hover:bg-foreground/5 transition-colors"
-                    >
-                      {link.name}
-                    </a>
-                  ))}
-                </div>
+
+                {exploreOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-full mt-3 w-48 py-2 rounded-xl bg-white border border-gray-200 shadow-xl text-left z-50"
+                  >
+                    {navLinks.slice(3).map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setExploreOpen(false)}
+                        className="block px-5 py-3 text-xs font-bold uppercase tracking-widest text-gray-700 hover:text-primary hover:bg-primary/5 transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
               </div>
             )}
           </div>

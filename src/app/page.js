@@ -20,7 +20,7 @@ export default async function Home() {
       {sections.length > 0 ? sections.map((section) => {
         const BlockComponent = SectionMap[section.type];
         if (!BlockComponent) return null;
-        return <BlockComponent key={section.id} data={section.data} id={section.id} />;
+        return <BlockComponent key={section.id} data={section.data} id={section.type === 'Hero' ? 'home' : section.id} />;
       }) : (
         <div className="h-screen flex items-center justify-center text-foreground/50 font-bold uppercase tracking-widest p-4 text-center">
             Portfolio content not found. <br/> Visit /admin to seed your database.
