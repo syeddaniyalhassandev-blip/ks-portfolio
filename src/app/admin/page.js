@@ -411,6 +411,37 @@ function AdminDashboard({ onLogout }) {
                       className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow leading-relaxed" 
                     />
                   </div>
+
+                  {/* Button Visibility Toggles */}
+                  <div className="border-t border-gray-100 pt-6">
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Button Visibility</label>
+                    <div className="space-y-3">
+                      <label className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div>
+                          <p className="text-sm font-bold text-gray-800">View Resume Button</p>
+                          <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Opens CV in new tab</p>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={activeSection.data.showResume !== false}
+                          onChange={e => updateSectionData({...activeSection.data, showResume: e.target.checked})}
+                          className="w-5 h-5 accent-primary cursor-pointer"
+                        />
+                      </label>
+                      <label className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div>
+                          <p className="text-sm font-bold text-gray-800">Download Button</p>
+                          <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Downloads CV PDF</p>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={activeSection.data.showDownload !== false}
+                          onChange={e => updateSectionData({...activeSection.data, showDownload: e.target.checked})}
+                          className="w-5 h-5 accent-primary cursor-pointer"
+                        />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               )}
 

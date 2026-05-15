@@ -416,21 +416,25 @@ export default function Hero({ data, id }) {
           transition={{ delay: 1 }}
         >
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl shadow-lg hover:shadow-primary/30 inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
-            >
-              VIEW RESUME
-            </a>
-            <a
-              href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
-              download="Khubaib_Salman_CV.pdf"
-              className="text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl border-2 border-white/30 hover:border-primary text-white/80 hover:text-primary inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
-            >
-              DOWNLOAD ↓
-            </a>
+            {data?.showResume !== false && (
+              <a
+                href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl shadow-lg hover:shadow-primary/30 inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
+              >
+                VIEW RESUME
+              </a>
+            )}
+            {data?.showDownload !== false && (
+              <a
+                href={data?.cvPath || "/Khubaib_Salman_CV.pdf"}
+                download="Khubaib_Salman_CV.pdf"
+                className="text-xs sm:text-sm px-8 sm:px-10 py-3 rounded-xl border-2 border-white/30 hover:border-primary text-white/80 hover:text-primary inline-flex items-center justify-center uppercase tracking-[0.15em] font-extrabold transition-all hover:scale-105 active:scale-95"
+              >
+                DOWNLOAD ↓
+              </a>
+            )}
           </div>
         </motion.div>
       </div>
