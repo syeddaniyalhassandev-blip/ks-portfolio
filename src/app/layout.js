@@ -30,7 +30,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="scroll-smooth bg-background" suppressHydrationWarning>
       <body className={`${montserrat.className} antialiased selection:bg-primary/20`} suppressHydrationWarning>
         <Navbar navLinks={navLinks} />
         {children}
