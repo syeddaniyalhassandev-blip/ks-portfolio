@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar({ navLinks = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
+  const exploreRef = useRef(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -16,130 +18,121 @@ export default function Navbar({ navLinks = [] }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close explore dropdown when clicking outside
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
+    const handleClickOutside = (e) => {
+      if (exploreRef.current && !exploreRef.current.contains(e.target)) {
+        setExploreOpen(false);
+      }
     };
-  }, [isOpen]);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   if (pathname?.startsWith("/admin")) return null;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass py-2" : "bg-transparent py-4"
+    <nav
+      className={`fixed top-0 left-0 right-0 z-60 transition-all duration-300 ${
+        scrolled ? "glass py-2 shadow-sm" : "bg-transparent py-4"
       }`}
     >
-      <nav className="max-w-6xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <a
             href="#home"
-            className="group flex items-center gap-3"
+            className={`text-3xl font-black uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
           >
-            <span
-              className={`text-lg font-semibold tracking-tight transition-colors ${
-                scrolled
-                  ? "text-foreground"
-                  : "text-white"
-              }`}
-            >
-              Khubaib Salman
-            </span>
-            <span
-              className={`hidden sm:block text-sm transition-colors ${
-                scrolled
-                  ? "text-muted"
-                  : "text-white/70"
-              }`}
-            >
-              Mechatronics Engineer
-            </span>
+            KS
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav */}
+          <div className="hidden md:flex space-x-7 items-center">
+            {navLinks.slice(0, 3).map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary ${scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
+              >
+                {link.name}
+              </a>
+            ))}
+
+            {navLinks.length > 3 && (
+              <div className="relative" ref={exploreRef}>
+                <button
+                  onClick={() => setExploreOpen(prev => !prev)}
+                  className={`flex items-center gap-1 text-xs font-bold uppercase tracking-widest transition-colors hover:text-primary focus:outline-none ${scrolled ? 'text-foreground/70' : 'text-white/90 drop-shadow'}`}
+                >
+                  Explore
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-300 ${exploreOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {exploreOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-full mt-3 w-48 py-2 rounded-xl bg-white border border-gray-200 shadow-xl text-left z-50"
+                  >
+                    {navLinks.slice(3).map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setExploreOpen(false)}
+                        className="block px-5 py-3 text-xs font-bold uppercase tracking-widest text-gray-700 hover:text-primary hover:bg-primary/5 transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-2 transition-colors ${scrolled ? 'text-foreground' : 'text-white drop-shadow-lg'}`}
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden bg-white shadow-xl border-t border-gray-100 absolute top-full left-0 right-0 py-6"
+        >
+          <div className="flex flex-col items-center space-y-5">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`nav-link text-sm font-medium transition-colors ${
-                  scrolled
-                    ? "text-muted hover:text-foreground"
-                    : "text-white/80 hover:text-white"
-                }`}
+                onClick={() => setIsOpen(false)}
+                className="text-sm font-black uppercase tracking-widest text-foreground hover:text-primary transition-colors"
               >
                 {link.name}
               </a>
             ))}
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 -mr-2 transition-colors ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm md:hidden"
-              onClick={() => setIsOpen(false)}
-            />
-            
-            {/* Menu Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute top-full left-4 right-4 mt-2 bg-white rounded-xl shadow-xl border border-border overflow-hidden md:hidden"
-            >
-              <div className="py-3">
-                {navLinks.map((link, index) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex items-center px-5 py-3 text-sm font-medium text-foreground hover:bg-gray-50 transition-colors"
-                  >
-                    {link.name}
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </header>
+        </motion.div>
+      )}
+    </nav>
   );
 }
