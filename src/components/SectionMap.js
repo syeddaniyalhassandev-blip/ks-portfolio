@@ -9,6 +9,7 @@ import Certifications from "@/components/Certifications";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import CustomBlock from "@/components/CustomBlock";
+import Gallery from "@/components/Gallery";
 
 export const SectionMap = {
   Hero,
@@ -21,5 +22,6 @@ export const SectionMap = {
   Certifications,
   Testimonials,
   Contact,
-  CustomBlock
+  CustomBlock,
+  Gallery
 };

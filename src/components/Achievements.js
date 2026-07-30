@@ -36,7 +36,7 @@ export default function Achievements({ data, id }) {
   };
 
   const allImages = selected
-    ? [selected.image, ...(selected.extraImages || [])]
+    ? [selected.image, ...(selected.extraImages || []), ...(selected.images || [])].filter(Boolean)
     : [];
 
   return (

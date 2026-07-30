@@ -38,11 +38,11 @@ export default function Navbar({ navLinks = [] }) {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-60 transition-all duration-300 ${
-        scrolled ? "glass py-2 shadow-sm" : "bg-transparent py-4"
+        scrolled ? "glass py-1.5 shadow-sm" : "bg-transparent py-3"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-16">
+        <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? "h-12" : "h-14"}`}>
           {/* Logo */}
           <a
             href="#home"

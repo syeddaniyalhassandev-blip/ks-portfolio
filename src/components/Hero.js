@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 // Mechatronics SVG path data (simplified, drawable on canvas)
 const ICONS = [
@@ -257,7 +257,7 @@ function createParticles(W, H) {
 }
 
 export default function Hero({ data, id }) {
-  const titles = data?.titles || ["Mechatronics Engineer"];
+  const titles = useMemo(() => data?.titles || ["Mechatronics Engineer"], [data?.titles]);
   const [mounted, setMounted] = useState(false);
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);

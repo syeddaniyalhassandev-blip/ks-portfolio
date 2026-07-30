@@ -15,7 +15,7 @@ export default function Testimonials({ data, id }) {
             <Quote className="absolute top-6 right-6 w-8 h-8 text-white/5" />
             <div className="flex-grow">
               <p className="text-sm md:text-base text-foreground/70 italic font-medium leading-relaxed mb-8 relative z-10">
-                "{testimonial.feedback}"
+                &ldquo;{testimonial.feedback}&rdquo;
               </p>
             </div>
             <div className="flex items-center gap-4 mt-auto">
