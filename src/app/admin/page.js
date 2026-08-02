@@ -450,7 +450,7 @@ function AdminDashboard({ onLogout }) {
     } else if (type === 'About') {
       defaultData = { paragraphs: ["I am a Mechatronics Engineer passionate about robotics and automation."] };
     } else if (type === 'CustomBlock') {
-      defaultData = { title: "New Custom Feature", content: ["Add your custom content here."], image: "", images: [], imagePos: "right" };
+      defaultData = { title: "New Custom Feature", content: ["Add your custom content here."], image: "", images: [], imagePos: "right", enableShowMore: true };
     } else if (type === 'Contact') {
       defaultData = { email: "Khubaibsalman2004@gmail.com", linkedIn: "https://www.linkedin.com/in/khubaib-salman-3a09ab251/", introText: "I am always looking for interesting projects and collaborations in robotics and automation." };
     }
@@ -912,8 +912,21 @@ function AdminDashboard({ onLogout }) {
                       rows={6} 
                       value={(activeSection.data.content || []).join('\n\n')} 
                       onChange={e => updateSectionData({...activeSection.data, content: e.target.value.split('\n\n')})} 
-                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-6 text-gray-900 outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all leading-relaxed text-sm" 
+                      className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-6 text-gray-900 outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all leading-relaxed text-sm"
                     />
+                  </div>
+
+                  <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl p-4">
+                    <input
+                      type="checkbox"
+                      id="enableShowMoreToggle"
+                      checked={activeSection.data.enableShowMore !== false}
+                      onChange={e => updateSectionData({...activeSection.data, enableShowMore: e.target.checked})}
+                      className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                    />
+                    <label htmlFor="enableShowMoreToggle" className="text-sm font-bold text-gray-800 cursor-pointer select-none">
+                      Enable &quot;Show More / Show Less&quot; button for long paragraphs
+                    </label>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-100 pt-6">

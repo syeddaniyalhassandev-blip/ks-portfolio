@@ -5,7 +5,6 @@ import Section from "./Section";
 import Image from "next/image";
 import { useScroll, useTransform, motion } from "framer-motion";
 import ImageSlider from "./ImageSlider";
-import ExpandableText from "./ExpandableText";
 
 export default function Experience({ data, id }) {
   const experienceData = data || [];
@@ -62,11 +61,9 @@ export default function Experience({ data, id }) {
                       </div>
                       
                       <div className="mb-4">
-                        <ExpandableText
-                          text={exp.desc}
-                          limit={240}
-                          className="text-sm md:text-base text-foreground/70 font-medium leading-relaxed"
-                        />
+                        <p className="text-sm md:text-base text-foreground/70 font-medium leading-relaxed">
+                          {exp.desc}
+                        </p>
                       </div>
 
                       {/* Auto-Playing Multi-Image Slider */}

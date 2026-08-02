@@ -4,7 +4,6 @@ import Section from "./Section";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ImageSlider from "./ImageSlider";
-import ExpandableText from "./ExpandableText";
 
 export default function Projects({ data, id }) {
   const projectsData = data || [];
@@ -43,13 +42,11 @@ export default function Projects({ data, id }) {
               {/* Divider */}
               <div className="h-px bg-black/5 w-full" />
 
-              {/* Expandable Description for Long Text */}
+              {/* Description */}
               <div className="flex-grow">
-                <ExpandableText
-                  text={proj.desc}
-                  limit={150}
-                  className="text-xs text-foreground/70 font-medium leading-relaxed"
-                />
+                <p className="text-xs text-foreground/70 font-medium leading-relaxed">
+                  {proj.desc}
+                </p>
               </div>
 
               {/* Auto-Playing Multi-Image Slider */}

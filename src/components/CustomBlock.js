@@ -19,8 +19,10 @@ export default function CustomBlock({ data, id }) {
   const allImages = [image, ...(images || [])].filter(Boolean);
   const paragraphs = Array.isArray(content) ? content : (content ? [content] : []);
 
+  const enableShowMore = data.enableShowMore !== false;
+
   // Show 2 full paragraphs by default so it looks substantial & complete (no mid-word cutting)
-  const isLongText = paragraphs.length > 2 || paragraphs.join(" ").length > 800;
+  const isLongText = enableShowMore && (paragraphs.length > 2 || paragraphs.join(" ").length > 800);
 
   const previewParagraphs = isLongText ? paragraphs.slice(0, 2) : paragraphs;
   const remainingParagraphs = isLongText ? paragraphs.slice(2) : [];
