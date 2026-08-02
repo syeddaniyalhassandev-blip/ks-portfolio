@@ -43,7 +43,7 @@ export default function Projects({ data, id }) {
               <div className="h-px bg-black/5 w-full" />
 
               {/* Description */}
-              <div className="flex-grow">
+              <div className="grow">
                 <p className="text-xs text-foreground/70 font-medium leading-relaxed">
                   {proj.desc}
                 </p>

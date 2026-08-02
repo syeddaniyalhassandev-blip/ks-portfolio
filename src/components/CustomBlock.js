@@ -84,7 +84,7 @@ export default function CustomBlock({ data, id }) {
               <div
                 className={`transition-all duration-700 ease-in-out overflow-hidden ${
                   isExpanded
-                    ? "max-h-[3000px] opacity-100"
+                    ? "max-h-750 opacity-100"
                     : "max-h-0 opacity-0 pointer-events-none"
                 }`}
               >

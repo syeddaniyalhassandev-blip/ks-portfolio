@@ -45,7 +45,7 @@ export default function ExpandableText({ text = "", limit = 180, className = "te
         <div
           className={`transition-all duration-700 ease-in-out overflow-hidden ${
             isExpanded
-              ? "max-h-[2500px] opacity-100"
+              ? "max-h-625 opacity-100"
               : "max-h-0 opacity-0 pointer-events-none"
           }`}
         >

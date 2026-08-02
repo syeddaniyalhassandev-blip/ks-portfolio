@@ -1528,7 +1528,7 @@ function ArrayAccordionEditor({ title, icon: TitleIcon, items, onChange, templat
                               <select
                                 value={item[field.key] || field.options?.[0] || ''}
                                 onChange={e => updateItem(idx, field.key, e.target.value)}
-                                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-900 text-sm outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all h-[46px] cursor-pointer font-bold uppercase"
+                                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-900 text-sm outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all h-11.5 cursor-pointer font-bold uppercase"
                               >
                                 {(field.options || []).map(opt => (
                                   <option key={opt} value={opt} className="bg-white text-gray-900 uppercase font-bold">
@@ -1554,7 +1554,7 @@ function ArrayAccordionEditor({ title, icon: TitleIcon, items, onChange, templat
                                 value={(item[field.key] || []).join('\n')} 
                                 onChange={e => updateItem(idx, field.key, e.target.value.split('\n'))} 
                                 placeholder={field.placeholder || ''}
-                                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-900 text-sm outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all leading-relaxed font-mono text-xs" 
+                                className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-gray-900 outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary transition-all leading-relaxed font-mono text-xs" 
                               />
                             )}
 
@@ -1585,7 +1585,7 @@ function ArrayAccordionEditor({ title, icon: TitleIcon, items, onChange, templat
                                       </div>
                                     )}
                                     <div className="text-xs">
-                                      <p className="font-bold text-gray-900 truncate max-w-[180px]">Loaded File</p>
+                                      <p className="font-bold text-gray-900 truncate max-w-45">Loaded File</p>
                                       <a href={item[field.key]} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary hover:underline font-mono">
                                         Preview Link ↗
                                       </a>

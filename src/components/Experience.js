@@ -22,12 +22,12 @@ export default function Experience({ data, id }) {
         <div ref={containerRef} className="relative">
           
           {/* Continuous Timeline Rail */}
-          <div className="absolute left-[9px] top-2 bottom-0 w-0.5 bg-foreground/10" />
+          <div className="absolute left-2.25 top-2 bottom-0 w-0.5 bg-foreground/10" />
           
           {/* Scroll Progress Line */}
           <motion.div 
             style={{ scaleY, originY: 0 }}
-            className="absolute left-[9px] top-2 bottom-0 w-0.5 bg-primary shadow-[0_0_15px_rgba(52,152,219,0.8)] z-0"
+            className="absolute left-2.25 top-2 bottom-0 w-0.5 bg-primary shadow-[0_0_15px_rgba(52,152,219,0.8)] z-0"
           />
 
           {experienceData.map((exp, i) => {

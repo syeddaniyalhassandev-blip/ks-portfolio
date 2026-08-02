@@ -178,7 +178,7 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightboxOpen(false)}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-100 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
           >
             {/* Close button (z-[110] with large click target) */}
             <button
@@ -187,7 +187,7 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
                 e.stopPropagation();
                 setLightboxOpen(false);
               }}
-              className="absolute top-6 right-6 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-[110] cursor-pointer shadow-lg"
+              className="absolute top-6 right-6 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-110 cursor-pointer shadow-lg"
               title="Close (Escape)"
             >
               <X size={26} />
@@ -198,7 +198,7 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
               <button
                 type="button"
                 onClick={prevSlide}
-                className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-[110] cursor-pointer"
+                className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-110 cursor-pointer"
               >
                 <ChevronLeft size={28} />
               </button>
@@ -235,7 +235,7 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
               <button
                 type="button"
                 onClick={nextSlide}
-                className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-[110] cursor-pointer"
+                className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-white/15 hover:bg-white/30 text-white transition-all z-110 cursor-pointer"
               >
                 <ChevronRight size={28} />
               </button>
