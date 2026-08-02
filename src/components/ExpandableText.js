@@ -20,8 +20,13 @@ export default function ExpandableText({ text = "", limit = 180, className = "te
 
     setTimeout(() => {
       if (nextState) {
-        // Expanding: gently scroll down slightly
-        window.scrollBy({ top: 180, behavior: "smooth" });
+        // Expanding: smoothly scroll down to center the text block
+        if (containerRef.current) {
+          containerRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
       } else {
         // Collapsing: smoothly scroll up to the top of this text block if scrolled past
         if (containerRef.current) {

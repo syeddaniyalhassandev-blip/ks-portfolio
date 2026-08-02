@@ -10,6 +10,8 @@ export default function CustomBlock({ data, id }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
 
+  const lastParaRef = useRef(null);
+
   if (!data) return null;
   const { title, content, image, images = [] } = data;
 
@@ -29,8 +31,13 @@ export default function CustomBlock({ data, id }) {
 
     setTimeout(() => {
       if (nextState) {
-        // Expanding: Gently scroll down so newly revealed text comes into focus
-        window.scrollBy({ top: 280, behavior: "smooth" });
+        // Expanding: Smoothly scroll down to the LAST paragraph
+        if (lastParaRef.current) {
+          lastParaRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
       } else {
         // Collapsing: Smoothly scroll to show HALF IMAGE and HALF TEXT
         if (sectionRef.current) {
@@ -64,7 +71,7 @@ export default function CustomBlock({ data, id }) {
             {previewParagraphs.map((paragraph, idx) => (
               <p
                 key={idx}
-                className="text-sm sm:text-base text-foreground/80 leading-relaxed font-medium"
+                className="text-sm sm:text-base text-foreground/80 leading-relaxed font-medium text-justify"
               >
                 {paragraph}
               </p>
@@ -83,7 +90,7 @@ export default function CustomBlock({ data, id }) {
                   {remainingParagraphs.map((paragraph, idx) => (
                     <p
                       key={idx + previewParagraphs.length}
-                      className="text-sm sm:text-base text-foreground/80 leading-relaxed font-medium"
+                      className="text-sm sm:text-base text-foreground/80 leading-relaxed font-medium text-center"
                     >
                       {paragraph}
                     </p>
@@ -91,6 +98,9 @@ export default function CustomBlock({ data, id }) {
                 </div>
               </div>
             )}
+
+            {/* Scroll target for the LAST paragraph */}
+            <div ref={lastParaRef} className="h-1" />
           </div>
 
           {/* CENTERED, STICKY, INVERTED SHOW MORE / SHOW LESS BUTTON */}
@@ -102,9 +112,7 @@ export default function CustomBlock({ data, id }) {
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-white border border-primary hover:bg-white hover:text-primary hover:border-primary/40 font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg group"
               >
                 <span>
-                  {isExpanded
-                    ? "Show Less"
-                    : `Show More (${remainingParagraphs.length} more paragraphs)`}
+                  {isExpanded ? "Show Less" : "Show More"}
                 </span>
                 <ChevronDown
                   size={16}

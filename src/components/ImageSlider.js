@@ -9,19 +9,21 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [loadedImages, setLoadedImages] = useState({});
 
   const validImages = (images || []).filter(Boolean);
+  const isCurrentLoaded = !!loadedImages[currentIndex];
 
-  // Auto-play interval
+  // Auto-play interval (ONLY ticks when the current image has finished loading)
   useEffect(() => {
-    if (validImages.length <= 1 || isHovered || lightboxOpen) return;
+    if (validImages.length <= 1 || isHovered || lightboxOpen || !isCurrentLoaded) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % validImages.length);
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [validImages.length, isHovered, lightboxOpen]);
+  }, [validImages.length, isHovered, lightboxOpen, isCurrentLoaded]);
 
   // Escape key to close lightbox
   useEffect(() => {
@@ -69,21 +71,35 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
             onClick={() => setLightboxOpen(true)}
             className="absolute inset-0 w-full h-full cursor-pointer overflow-hidden"
           >
+            {/* Loading placeholder spinner while image is downloading */}
+            {!isCurrentLoaded && (
+              <div className="absolute inset-0 bg-gray-900/60 animate-pulse flex items-center justify-center z-10">
+                <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+              </div>
+            )}
+
             {/* Ambient Blurred Glow (Fills any empty space with matching colors) */}
-            <Image
-              src={validImages[currentIndex]}
-              alt=""
-              fill
-              className="object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
-              unoptimized
-            />
+            {isCurrentLoaded && (
+              <Image
+                src={validImages[currentIndex]}
+                alt=""
+                fill
+                className="object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
+                unoptimized
+              />
+            )}
 
             {/* FULL UNCROPPED IMAGE (object-contain so 100% of the image is shown without cutting) */}
             <Image
               src={validImages[currentIndex]}
               alt={`${title} - slide ${currentIndex + 1}`}
               fill
-              className="object-contain transition-transform duration-700 group-hover:scale-105"
+              className={`object-contain transition-opacity duration-700 ${
+                isCurrentLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() =>
+                setLoadedImages((prev) => ({ ...prev, [currentIndex]: true }))
+              }
               unoptimized
             />
 
@@ -123,7 +139,13 @@ export default function ImageSlider({ images = [], title = "Gallery Image", clas
             {/* Top-Right Status Badge (Auto-play Indicator + Slide Counter) */}
             <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-mono uppercase tracking-wider font-bold">
               <span className="flex items-center gap-1">
-                {isHovered ? <Pause size={10} className="text-amber-400" /> : <Play size={10} className="text-emerald-400 fill-emerald-400" />}
+                {!isCurrentLoaded ? (
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                ) : isHovered ? (
+                  <Pause size={10} className="text-amber-400" />
+                ) : (
+                  <Play size={10} className="text-emerald-400 fill-emerald-400" />
+                )}
                 <span>{currentIndex + 1}/{validImages.length}</span>
               </span>
             </div>
